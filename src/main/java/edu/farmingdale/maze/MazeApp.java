@@ -9,10 +9,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -81,7 +78,7 @@ public class MazeApp extends Application {
         topBar.setPadding(new Insets(10));
         topBar.setAlignment(Pos.TOP_LEFT);
 
-        StackPane imagePane = new StackPane(imageView);
+        AnchorPane imagePane = new AnchorPane(imageView);
         imagePane.setPadding(new Insets(10));
 
         RobotOverlay.attach(imagePane, vehicleDropdown);
