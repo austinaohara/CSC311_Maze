@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -58,10 +59,16 @@ public class MazeApp extends Application {
                     stage.setTitle("Image Picker");
                 });
 
-                // Put image in center, button at top
+                // Put image in center, controls at top
                 BorderPane secondRoot = new BorderPane();
 
-                HBox topBar = new HBox(mainMenuButton);
+                ComboBox<String> vehicleDropdown = new ComboBox<>();
+                vehicleDropdown.getItems().addAll("Robot", "Car");
+                vehicleDropdown.setValue("Robot");
+
+                Button autoCompleteButton = new Button("Auto Complete");
+
+                HBox topBar = new HBox(10, mainMenuButton, vehicleDropdown, autoCompleteButton);
                 topBar.setPadding(new Insets(10));
                 topBar.setAlignment(Pos.TOP_LEFT);
 
