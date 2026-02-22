@@ -84,6 +84,8 @@ public class MazeApp extends Application {
         StackPane imagePane = new StackPane(imageView);
         imagePane.setPadding(new Insets(10));
 
+        RobotOverlay.attach(imagePane, vehicleDropdown);
+
         secondRoot.setTop(topBar);
         secondRoot.setCenter(imagePane);
 
