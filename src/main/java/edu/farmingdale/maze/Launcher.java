@@ -2,7 +2,8 @@ package edu.farmingdale.maze;
 
 import javafx.application.Application;
 
-public class Launcher {
+public class Launcher
+{
     public static void main(String[] args) {
         Application.launch(MazeApp.class, args);
     }
