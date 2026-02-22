@@ -31,61 +31,12 @@ public class MazeApp extends Application {
 
         Scene firstScene = new Scene(firstRoot, 500, 300);
 
+        // Add functionality to the open button
         openButton.setOnAction(e -> {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Open Image");
-            fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp")
-            );
-
-            // Start in resources folder
-            File resourcesFolder = new File("src/main/resources/edu/farmingdale/maze/images");
-            if (resourcesFolder.exists() && resourcesFolder.isDirectory()) {
-                fileChooser.setInitialDirectory(resourcesFolder);
-            }
-
-            File selectedFile = fileChooser.showOpenDialog(stage);
+            File selectedFile = selectImageFile(stage);
 
             if (selectedFile != null) {
-                Image image = new Image(selectedFile.toURI().toString());
-
-                ImageView imageView = new ImageView(image);
-                imageView.setPreserveRatio(true);
-
-                // Back button
-                Button mainMenuButton = new Button("Main Menu");
-                mainMenuButton.setOnAction(ev -> {
-                    stage.setScene(firstScene);
-                    stage.setTitle("Image Picker");
-                });
-
-                // Put image in center, controls at top
-                BorderPane secondRoot = new BorderPane();
-
-                ComboBox<String> vehicleDropdown = new ComboBox<>();
-                vehicleDropdown.getItems().addAll("Robot", "Car");
-                vehicleDropdown.setValue("Robot");
-
-                Button autoCompleteButton = new Button("Auto Complete");
-
-                HBox topBar = new HBox(10, mainMenuButton, vehicleDropdown, autoCompleteButton);
-                topBar.setPadding(new Insets(10));
-                topBar.setAlignment(Pos.TOP_LEFT);
-
-                StackPane imagePane = new StackPane(imageView);
-                imagePane.setPadding(new Insets(10));
-
-                secondRoot.setTop(topBar);
-                secondRoot.setCenter(imagePane);
-
-                Scene secondScene = new Scene(secondRoot, 800, 600);
-
-                // Resize image with window (leave some room for button bar)
-                imageView.fitWidthProperty().bind(secondScene.widthProperty().subtract(20));
-                imageView.fitHeightProperty().bind(secondScene.heightProperty().subtract(70));
-
-                stage.setScene(secondScene);
-                stage.setTitle(selectedFile.getName());
+                showMazeScene(stage, firstScene, selectedFile);
             }
         });
 
@@ -96,5 +47,69 @@ public class MazeApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    private void autoSolve() {
+        // TODO: Implement maze auto-solve logic.
+        System.out.println("Auto-solve not implemented yet!");
+    }
+
+    private void showMazeScene(Stage stage, Scene firstScene, File selectedFile) {
+        Image image = new Image(selectedFile.toURI().toString());
+
+        ImageView imageView = new ImageView(image);
+        imageView.setPreserveRatio(true);
+
+        // Back button
+        Button mainMenuButton = new Button("Main Menu");
+        mainMenuButton.setOnAction(ev -> {
+            stage.setScene(firstScene);
+            stage.setTitle("Image Picker");
+        });
+
+        // Put image in center, controls at top
+        BorderPane secondRoot = new BorderPane();
+
+        ComboBox<String> vehicleDropdown = new ComboBox<>();
+        vehicleDropdown.getItems().addAll("Robot", "Car");
+        vehicleDropdown.setValue("Robot");
+
+        Button autoCompleteButton = new Button("Auto Complete");
+        autoCompleteButton.setOnAction(ev -> autoSolve());
+
+        HBox topBar = new HBox(10, mainMenuButton, vehicleDropdown, autoCompleteButton);
+        topBar.setPadding(new Insets(10));
+        topBar.setAlignment(Pos.TOP_LEFT);
+
+        StackPane imagePane = new StackPane(imageView);
+        imagePane.setPadding(new Insets(10));
+
+        secondRoot.setTop(topBar);
+        secondRoot.setCenter(imagePane);
+
+        Scene secondScene = new Scene(secondRoot, 800, 600);
+
+        // Resize image with window (leave some room for button bar)
+        imageView.fitWidthProperty().bind(secondScene.widthProperty().subtract(20));
+        imageView.fitHeightProperty().bind(secondScene.heightProperty().subtract(70));
+
+        stage.setScene(secondScene);
+        stage.setTitle(selectedFile.getName());
+    }
+
+    private File selectImageFile(Stage stage) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Image");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp")
+        );
+
+        // Start in resources folder
+        File resourcesFolder = new File("src/main/resources/edu/farmingdale/maze/images");
+        if (resourcesFolder.exists() && resourcesFolder.isDirectory()) {
+            fileChooser.setInitialDirectory(resourcesFolder);
+        }
+
+        return fileChooser.showOpenDialog(stage);
     }
 }
