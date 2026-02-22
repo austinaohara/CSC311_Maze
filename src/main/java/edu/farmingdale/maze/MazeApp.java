@@ -37,6 +37,12 @@ public class MazeApp extends Application {
                     new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp")
             );
 
+            // Start in resources folder
+            File resourcesFolder = new File("src/main/resources/edu/farmingdale/maze/images");
+            if (resourcesFolder.exists() && resourcesFolder.isDirectory()) {
+                fileChooser.setInitialDirectory(resourcesFolder);
+            }
+
             File selectedFile = fileChooser.showOpenDialog(stage);
 
             if (selectedFile != null) {
